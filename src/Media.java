@@ -21,7 +21,6 @@ public class Media {
     }
 
 
-
     public String getTitle() {
         return this.title;
     }
