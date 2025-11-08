@@ -1,4 +1,8 @@
+import java.util.ArrayList;
+
 public class User {
+
+
     String userName;
     String password;
     boolean subscription;
@@ -32,4 +36,5 @@ public class User {
     public void setSubscription(boolean subscription) {
         this.subscription = subscription;
     }
+
 }
