@@ -6,8 +6,12 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-Media media = new Media();
+ReadFile readFile = new ReadFile();
 
-media.readfile("movie.csv");
+ArrayList<String> lines = readFile.readFile("/Users/danarulle/Documents/java/SP3 - Streamingtjeneste/Data_resource/movie.csv");
+for (int i = 0; i < lines.size(); i++) {
+    System.out.println(lines.get(i));
+}
+
     }
 }

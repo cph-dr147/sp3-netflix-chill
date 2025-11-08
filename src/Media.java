@@ -30,26 +30,9 @@ public class Media {
         this.title = title;
     }
 
+    {}
 
-    public String readFile(String filePath) {
-        String file = "movie.csv";
-        String line;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            while ((line = br.readLine()) != null) {
-                String[] values = line.split(",");
-                for (String value : values) {
-                    System.out.print(value + " | ");
-                }
-                System.out.println();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return file;
 
-    }
 
-    public void readfile(String s) {
-    }
 }
