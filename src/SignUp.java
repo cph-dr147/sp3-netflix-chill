@@ -22,18 +22,19 @@ public class SignUp {
                 //If it finds a match, it warns the user and stops the signup process.
                 //If no match is found, the method continues to create the new user.
             }
-
-            System.out.print("Enter password: ");
-            String password = input.next();
-
-            System.out.print("Subscribe? (true/false): ");
-            boolean subscription = input.nextBoolean();
-
-            User newUser = new User(username, password, subscription);
-            users.add(newUser); // creat new users
-
-            System.out.println("User created successfully!");
         }
+        System.out.print("Enter password: ");
+        String password = input.next();
+
+        // System.out.print("Subscribe? (true/false): ");
+        // boolean subscription = askForSubscription();
+        boolean subscription = true; // TODO: remember to fix this, so that it depends on input.next()
+
+        User newUser = new User(username, password, subscription);
+        users.add(newUser); // adds new user to ArrayList
+        // her skal alle users gemmes i en fil
+        System.out.println("User created successfully!");
+
     }
 }
 

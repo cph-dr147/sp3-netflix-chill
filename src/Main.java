@@ -11,9 +11,11 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
+
         // Hardcoded users (for testing)
         ArrayList<User> users = new ArrayList<>();
-        users.add(new User("nada", "123456", true)); // ✅ Hardcoded login
+       // users.add(new User("nada", "123456", true)); // ✅ Hardcoded login
+
 
         // Your existing SignUp and LogIn objects (optional if they depend on this list)
         SignUp signUp = new SignUp(users);
@@ -58,7 +60,7 @@ public class Main {
                             break;
                         }
                     }
-
+                    // TODO: lav switchcase
                     if (validLogin) {
                         System.out.println("You are now logged in!");
                         listMoviesByGenre(); // ✅ Show movies after login
@@ -123,6 +125,50 @@ public class Main {
                 System.out.println("\nNo " + genre + " movies found in the database.");
             } else {
                 System.out.println("\nHere is a list of " + genre + " movies:\n");
+                for (Movie movie : filtered) {
+                    System.out.println("- " + movie.getTitle());
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Error loading or filtering movies: " + e.getMessage());
+        }
+    }
+
+    public static void searchMovieByName(){
+
+        try {
+            Path csvPath = Paths.get("/Users/danarulle/Documents/java/SP3 - Streamingtjeneste/Data_source/movie.csv");
+
+            System.out.println("looking for the movie file " + csvPath.toAbsolutePath());
+            if (!Files.exists(csvPath)){
+                Path alt1 = Paths.get("Data_resource/movie.csv");
+                Path alt2 =Paths.get("data source", "movie.csv");
+                if (Files.exists(alt1)) csvPath = alt1;
+                else if (Files.exists(alt2)) csvPath = alt2;
+                else {
+                    System.out.println("file was not found ");
+                    return;
+                }
+            }
+
+            List<Movie> movies = MovieLoader.load(csvPath);
+
+            Scanner scanner = new Scanner(System.in);
+            System.out.print("What movie would you like to see? (e.g \"The godfather\"): ");
+
+            String movieName = scanner.nextLine().trim().toLowerCase();
+            List<Movie> filtered = new ArrayList<>();
+            for (Movie m : movies) {
+                if (movieName.contains(m.getTitle().toLowerCase())) {
+                    filtered.add(m);
+                }
+            }
+
+
+            if (filtered.isEmpty()) {
+                System.out.println("\nNo movies matching " + movieName + " found in the database.");
+            } else {
+                System.out.println("\nHere is a list of movies that matches your search:\n");
                 for (Movie movie : filtered) {
                     System.out.println("- " + movie.getTitle());
                 }
