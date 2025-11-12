@@ -26,15 +26,31 @@ public class SignUp {
         System.out.print("Enter password: ");
         String password = input.next();
 
-        // System.out.print("Subscribe? (true/false): ");
-        // boolean subscription = askForSubscription();
-        boolean subscription = true; // TODO: remember to fix this, so that it depends on input.next()
 
-        User newUser = new User(username, password, subscription);
+
+        User newUser = new User(username, password);
         users.add(newUser); // adds new user to ArrayList
         // her skal alle users gemmes i en fil
         System.out.println("User created successfully!");
 
+    }
+
+    public boolean askForSubscription() {
+        Scanner input = new Scanner(System.in);
+        System.out.println("Would you like to add subscribe?");
+
+        while (true) {
+            String answer = input.next();
+            if (answer.equalsIgnoreCase("y")) {
+                return true;
+            }
+            else if (answer.equalsIgnoreCase("n")) {
+                return false;
+            }
+            else {
+                System.out.println("please answer either yes (y) or no (n)");
+            }
+        }
     }
 }
 

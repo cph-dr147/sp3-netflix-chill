@@ -5,12 +5,13 @@ public class User {
 
     String userName;
     String password;
-    boolean subscription;
 
-    public User(String userName, String password, boolean subscription) {
+    ArrayList<Movie> watchedMovies;
+
+    public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
-        this.subscription = subscription;
+        this.watchedMovies = new ArrayList<Movie>();
     }
 
     public String getUserName() {
@@ -27,14 +28,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public boolean isSubscription() {
-        return subscription;
-    }
-
-    public void setSubscription(boolean subscription) {
-        this.subscription = subscription;
     }
 
 

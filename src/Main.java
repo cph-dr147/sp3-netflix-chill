@@ -1,21 +1,17 @@
-
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main {
+
     public static void main(String[] args) {
 
         // Hardcoded users (for testing)
         ArrayList<User> users = new ArrayList<>();
-       // users.add(new User("nada", "123456", true)); // ✅ Hardcoded login
-
+        // users.add(new User("nada", "123456", true)); // ✅ Hardcoded login
 
         // Your existing SignUp and LogIn objects (optional if they depend on this list)
         SignUp signUp = new SignUp(users);
@@ -51,7 +47,7 @@ public class Main {
                     System.out.print("Enter password: ");
                     String password = input.nextLine().trim();
 
-                    // ✅ Hardcoded login check
+                    //  Hardcoded login check
                     boolean validLogin = false;
                     for (User u : users) {
                         if (u.getUserName().equalsIgnoreCase(username) &&
@@ -60,10 +56,11 @@ public class Main {
                             break;
                         }
                     }
-                    // TODO: lav switchcase
+
                     if (validLogin) {
                         System.out.println("You are now logged in!");
-                        listMoviesByGenre(); // ✅ Show movies after login
+                        Main m = new Main();
+                        m.userOptionsAfterLogin(); // ✅ show menu after login
                     } else {
                         System.out.println("Invalid username or password. Try again.");
                     }
@@ -80,20 +77,58 @@ public class Main {
         }
     }
 
-    // ✅ Existing method unchanged
+
+    public void userOptionsAfterLogin() {
+        Scanner scanner = new Scanner(System.in);
+        boolean running = true;
+
+        while (running) {
+            System.out.println("\n1. List movies by genre");
+            System.out.println("2. Search movie by name");
+            System.out.println("3. Mark movie as watched");
+            System.out.println("4. Log out");
+            System.out.print("Choose an option: ");
+
+            int choice;
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+            } else {
+                System.out.println("Please enter a number between 1–4");
+                scanner.nextLine();
+                continue;
+            }
+
+            switch (choice) {
+                case 1 -> listMoviesByGenre();
+                case 2 -> searchMovieByName();
+                case 3 -> {
+                    System.out.print("Enter the title of the movie you watched: ");
+                    String watchedTitle = scanner.nextLine().trim();
+                    System.out.println("Marked \"" + watchedTitle + "\" as watched!");
+                }
+                case 4 -> {
+                    System.out.println("Logging out... bye!");
+                    running = false;
+                }
+                default -> System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
     public static void listMoviesByGenre() {
         try {
             Path csvPath = Paths.get("/Users/danarulle/Documents/java/SP3 - Streamingtjeneste/Data_source/movie.csv");
 
-            System.out.println("looking for the movie file " + csvPath.toAbsolutePath());
-            if (!Files.exists(csvPath)){
-                Path alt1 =Paths.get("data source", "movie.csv");
-                Path alt2 = Paths.get("Data_source/movie.csv");
+            System.out.println("Looking for the movie file at: " + csvPath.toAbsolutePath());
+            if (!Files.exists(csvPath)) {
+                Path alt1 = Paths.get("Data_resource/movie.csv");
+                Path alt2 = Paths.get("data source", "movie.csv");
                 if (Files.exists(alt1)) csvPath = alt1;
-                        else if (Files.exists(alt2)) csvPath = alt2;
-                        else {
-                            System.out.println("file does not found ");
-                            return;
+                else if (Files.exists(alt2)) csvPath = alt2;
+                else {
+                    System.out.println("File was not found.");
+                    return;
                 }
             }
 
@@ -104,11 +139,11 @@ public class Main {
             String userInput = scanner.nextLine().trim().toLowerCase();
 
             String genre = null;
-            if (userInput.contains("crime"))       genre = "crime";
+            if (userInput.contains("crime")) genre = "crime";
             else if (userInput.contains("family")) genre = "family";
             else if (userInput.contains("comedy")) genre = "comedy";
             else if (userInput.contains("action")) genre = "action";
-            else if (userInput.contains("drama"))  genre = "drama";
+            else if (userInput.contains("drama")) genre = "drama";
             else {
                 System.out.println("Sorry, I don't recognize that genre.");
                 return;
@@ -129,24 +164,24 @@ public class Main {
                     System.out.println("- " + movie.getTitle());
                 }
             }
+
         } catch (Exception e) {
             System.out.println("Error loading or filtering movies: " + e.getMessage());
         }
     }
 
-    public static void searchMovieByName(){
-
+    public static void searchMovieByName() {
         try {
             Path csvPath = Paths.get("/Users/danarulle/Documents/java/SP3 - Streamingtjeneste/Data_source/movie.csv");
 
-            System.out.println("looking for the movie file " + csvPath.toAbsolutePath());
-            if (!Files.exists(csvPath)){
+            System.out.println("Looking for the movie file at: " + csvPath.toAbsolutePath());
+            if (!Files.exists(csvPath)) {
                 Path alt1 = Paths.get("Data_resource/movie.csv");
-                Path alt2 =Paths.get("data source", "movie.csv");
+                Path alt2 = Paths.get("data source", "movie.csv");
                 if (Files.exists(alt1)) csvPath = alt1;
                 else if (Files.exists(alt2)) csvPath = alt2;
                 else {
-                    System.out.println("file was not found ");
+                    System.out.println("File was not found.");
                     return;
                 }
             }
@@ -154,25 +189,25 @@ public class Main {
             List<Movie> movies = MovieLoader.load(csvPath);
 
             Scanner scanner = new Scanner(System.in);
-            System.out.print("What movie would you like to see? (e.g \"The godfather\"): ");
-
+            System.out.print("What movie would you like to see? (e.g., \"The Godfather\"): ");
             String movieName = scanner.nextLine().trim().toLowerCase();
+
             List<Movie> filtered = new ArrayList<>();
             for (Movie m : movies) {
-                if (movieName.contains(m.getTitle().toLowerCase())) {
+                if (m.getTitle().toLowerCase().contains(movieName)) {
                     filtered.add(m);
                 }
             }
 
-
             if (filtered.isEmpty()) {
-                System.out.println("\nNo movies matching " + movieName + " found in the database.");
+                System.out.println("\nNo movies matching \"" + movieName + "\" found in the database.");
             } else {
-                System.out.println("\nHere is a list of movies that matches your search:\n");
+                System.out.println("\nHere is a list of movies that match your search:\n");
                 for (Movie movie : filtered) {
                     System.out.println("- " + movie.getTitle());
                 }
             }
+
         } catch (Exception e) {
             System.out.println("Error loading or filtering movies: " + e.getMessage());
         }
