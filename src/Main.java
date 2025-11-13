@@ -11,9 +11,9 @@ public class Main {
 
         // Hardcoded users (for testing)
         ArrayList<User> users = new ArrayList<>();
-        // users.add(new User("nada", "123456", true)); // ✅ Hardcoded login
+        // users.add(new User("nada", "123456", true));
 
-        // Your existing SignUp and LogIn objects (optional if they depend on this list)
+        // Your existing SignUp and LogIn objects
         SignUp signUp = new SignUp(users);
         LogIn logIn = new LogIn(users);
         Scanner input = new Scanner(System.in);
@@ -28,7 +28,7 @@ public class Main {
             int choice;
             if (input.hasNextInt()) {
                 choice = input.nextInt();
-                input.nextLine(); // consume newline
+                input.nextLine();// consume newline
             } else {
                 System.out.println("Please enter a number (1-3).");
                 input.nextLine();
@@ -47,7 +47,7 @@ public class Main {
                     System.out.print("Enter password: ");
                     String password = input.nextLine().trim();
 
-                    //  Hardcoded login check
+                    //  login check
                     boolean validLogin = false;
                     for (User u : users) {
                         if (u.getUserName().equalsIgnoreCase(username) &&
@@ -60,7 +60,7 @@ public class Main {
                     if (validLogin) {
                         System.out.println("You are now logged in!");
                         Main m = new Main();
-                        m.userOptionsAfterLogin(); // ✅ show menu after login
+                        m.userOptionsAfterLogin(); //  show menu after login
                     } else {
                         System.out.println("Invalid username or password. Try again.");
                     }
@@ -149,18 +149,6 @@ public class Main {
                 return;
             }
 
-            /*List<Movie> filtered = new ArrayList<>();
-            for (Movie m : movies) {
-                if (genre.equalsIgnoreCase(m.getGenre())) {
-                    filtered.add(m);
-                }
-            }*/
-
-           /* List<Movie> filtered = new ArrayList<>();
-            for (Movie m : movies) {
-                if (m.getGenre() != null && m.getGenre().trim().equalsIgnoreCase(genre)) {
-                    filtered.add(m);
-                }*/
 // this is the one working for genre
             List<Movie> filtered = new ArrayList<>();
             for (Movie m : movies) {
@@ -193,11 +181,14 @@ public class Main {
     public static void searchMovieByName() {
         try {
             Path csvPath = Paths.get("/Users/danarulle/Documents/java/SP3 - Streamingtjeneste/Data_source/movie.csv");
+            // forst location to find cvs file
 
             System.out.println("Looking for the movie file at: " + csvPath.toAbsolutePath());
+            // other placese it exist if cant fine the first pplace
             if (!Files.exists(csvPath)) {
                 Path alt1 = Paths.get("Data_resource/movie.csv");
                 Path alt2 = Paths.get("data source", "movie.csv");
+
                 if (Files.exists(alt1)) csvPath = alt1;
                 else if (Files.exists(alt2)) csvPath = alt2;
                 else {
@@ -213,12 +204,6 @@ public class Main {
             String movieName = scanner.nextLine().trim().toLowerCase();
 
             List<Movie> filtered = new ArrayList<>();
-            //for (Movie m : movies) {
-                //  if (m.getTitle().toLowerCase().contains(movieName)) {
-                //  filtered.add(m);
-                // }
-
-           // }
             for (Movie m : movies) {
                 if (m.getTitle() != null && m.getTitle().toLowerCase().contains(movieName)) {
                     filtered.add(m);

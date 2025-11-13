@@ -32,7 +32,6 @@ public class SignUp {
         users.add(newUser); // adds new user to ArrayList
         // her skal alle users gemmes i en fil
         System.out.println("User created successfully!");
-
     }
 
     public boolean askForSubscription() {

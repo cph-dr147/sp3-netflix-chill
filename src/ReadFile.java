@@ -11,15 +11,11 @@ public class ReadFile {
         String line;
         ArrayList<String> output = new ArrayList<String>();
 
+        //  save each line in the list after reading the file
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             while ((line = br.readLine()) != null) {
                 output.add(line);
 
-                // String[] values = line.split(";");
-                // for (String value : values) {
-                //     System.out.print(value + " | ");
-                // }
-                // System.out.println();
             }
         } catch (IOException e) {
             e.printStackTrace();

@@ -21,15 +21,8 @@ public class Movie  extends Media {
     }
 
     public void parseDataString(String line) {
-        /*// System.out.println(line);
-        String[] parts = line.split(";");
-        this.title = parts[0].trim();
-        this.year = Integer.parseInt(parts[1].trim());
-        this.genre = parts[2].trim();
-        this.rating = Double.parseDouble(parts[3].trim().replace(",", "."));
-        // System.out.println("title: " + title + " | year: " + year + " | genre: " + genre + " | rating: " + rating);
-*/
-        //this is the one working
+
+// Splits CSV line and saves movie details (title, year, genre, rating).
         String[] parts = line.split(";");
         this.title = parts[0].trim();
         this.year = Integer.parseInt(parts[1].trim());

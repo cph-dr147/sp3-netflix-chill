@@ -1,9 +1,3 @@
-import java.util.ArrayList;
-
-// klassenavne starter med Stort, metodenavne skrives i camelCase, ligesom variabelnavne også skrives i camelCase
-
-// git commit -am "commit message"
-// git push
 
 public class Serie extends Media{
     int season;
